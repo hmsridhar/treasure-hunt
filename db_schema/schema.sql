@@ -95,7 +95,7 @@ CREATE TABLE `team` (
   `name` varchar(100) NOT NULL,
   `score` bigint(20) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,8 +107,8 @@ DROP TABLE IF EXISTS `team_members`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `team_members` (
   `team_id` bigint(20) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`team_id`),
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`team_id`,`name`),
   CONSTRAINT `team_members_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -138,4 +138,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-20 23:57:50
+-- Dump completed on 2020-04-21  0:26:40
