@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by harshams on 20/04/2020
  */
 @RestController
-@RequestMapping(path = "/test")
+@RequestMapping(path = "/login")
 public class LoginController {
 
     @Autowired
