@@ -21,4 +21,11 @@ public class UserService {
         return false;
 
     }
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public void addOrUpdateUser(User user){ userRepository.save(user); }
+
 }

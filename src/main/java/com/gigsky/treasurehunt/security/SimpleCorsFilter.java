@@ -1,4 +1,4 @@
-package com.gigsky.treasurehunt;
+package com.gigsky.treasurehunt.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
