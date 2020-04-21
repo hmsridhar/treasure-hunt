@@ -26,6 +26,7 @@ CREATE TABLE `has_answered_puzzle` (
   `team_id` bigint(20) NOT NULL,
   `puzzle_id` bigint(20) NOT NULL,
   `answer` varchar(200) NOT NULL,
+  `has_used_clue` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`team_id`,`puzzle_id`),
   KEY `puzzle_id` (`puzzle_id`),
   CONSTRAINT `has_answered_puzzle_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -129,7 +130,7 @@ CREATE TABLE `user` (
   `token` varchar(255) DEFAULT NULL,
   `token_expiry_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -141,4 +142,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-21 13:41:44
+-- Dump completed on 2020-04-21 15:35:56
