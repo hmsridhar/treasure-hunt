@@ -24,6 +24,9 @@ public class User {
     @Column
     private String role;
 
+    @Column(name = "team_id")
+    private Long teamId;
+
     @Column
     private String token;
 
@@ -58,6 +61,14 @@ public class User {
         return role;
     }
 
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
     public void setRole(String role) {
         this.role = role;
     }
@@ -88,7 +99,8 @@ public class User {
         if (!id.equals(user.id)) return false;
         if (!username.equals(user.username)) return false;
         if (!password.equals(user.password)) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        if (!role.equals(user.role)) return false;
+        if (!teamId.equals(user.teamId)) return false;
         if (token != null ? !token.equals(user.token) : user.token != null) return false;
         return tokenExpiryTime != null ? tokenExpiryTime.equals(user.tokenExpiryTime) : user.tokenExpiryTime == null;
     }
@@ -98,7 +110,8 @@ public class User {
         int result = id.hashCode();
         result = 31 * result + username.hashCode();
         result = 31 * result + password.hashCode();
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + role.hashCode();
+        result = 31 * result + teamId.hashCode();
         result = 31 * result + (token != null ? token.hashCode() : 0);
         result = 31 * result + (tokenExpiryTime != null ? tokenExpiryTime.hashCode() : 0);
         return result;

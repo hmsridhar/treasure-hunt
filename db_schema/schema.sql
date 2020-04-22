@@ -96,7 +96,7 @@ CREATE TABLE `team` (
   `name` varchar(100) NOT NULL,
   `score` bigint(20) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,8 +127,8 @@ CREATE TABLE `user` (
   `password` varchar(200) NOT NULL,
   `role` varchar(50) NOT NULL,
   `team_id` bigint(20) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `token_expiry_time` datetime NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `token_expiry_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `team_id` (`team_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -144,4 +144,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-22  0:43:21
+-- Dump completed on 2020-04-22 13:49:12

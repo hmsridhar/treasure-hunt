@@ -103,6 +103,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         userService.addOrUpdateUser(user);
         logger.info("Updated user data with new token");
         // Add token to header
+        response.addHeader("teamId",user.getTeamId().toString());
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
     }
 
