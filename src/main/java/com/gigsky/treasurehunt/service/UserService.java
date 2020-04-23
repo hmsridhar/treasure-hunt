@@ -28,4 +28,8 @@ public class UserService {
 
     public void addOrUpdateUser(User user){ userRepository.save(user); }
 
+    public Boolean existsByUsernameAndTeamId(String username, Long teamId){
+        return userRepository.existsByUsernameAndTeamId(username, teamId);
+    }
+
 }
