@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -61,9 +61,11 @@ public class User {
         return role;
     }
 
+
     public void setRole(String role) {
         this.role = role;
     }
+
 
     public Long getTeamId() {
         return teamId;
@@ -72,6 +74,10 @@ public class User {
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
     }
+
+
+
+
 
     public String getToken() {
         return token;

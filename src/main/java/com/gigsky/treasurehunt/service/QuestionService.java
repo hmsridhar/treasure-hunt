@@ -5,12 +5,15 @@ import com.gigsky.treasurehunt.dao.QuestionRepository;
 import com.gigsky.treasurehunt.model.beans.Answer;
 import com.gigsky.treasurehunt.model.beans.Clue;
 import com.gigsky.treasurehunt.model.beans.QuestionInfo;
+import com.gigsky.treasurehunt.model.beans.TeamQuestionAnswers;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredQuestion;
 import com.gigsky.treasurehunt.model.dbbeans.Question;
 import com.gigsky.treasurehunt.model.dbbeans.TeamQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -79,6 +82,75 @@ public class QuestionService {
         }
         return false;
     }
+
+    private boolean checkAnswer(String teamAnswer,Long id) {
+        Question question=questionRepository.getQuestionById(id);
+
+        String[] listOfAnswers=question.getAnswer().split(",");
+        List<String> answersList= Arrays.asList(listOfAnswers);
+        if(answersList.contains(teamAnswer.toLowerCase())){
+            return true;
+        }
+        return  false;
+    }
+
+
+    public TeamQuestionAnswers getQuestionAnswersTeamInfo(Long teamId){
+        try {
+            Iterable<Question> questions = questionRepository.findAll();
+            List<Question> questionList = new ArrayList<>();
+            for (Question question : questions) {
+                questionList.add(question);
+            }
+
+            int rightAnswers = 0;
+            int wrongAnswers = 0;
+            int day = 1;
+            //int maxDay=config.getDay();
+            List<QuestionInfo> questionInfoList = new ArrayList<>();
+            for (Question question : questionList) {
+                QuestionInfo questionInfo = new QuestionInfo();
+                questionInfo.setId(question.getId());
+                questionInfo.setText(question.getQuestion());
+
+                HasAnsweredQuestion hasAnsweredQuestion = getPuzzleAnswerStatusTeam(teamId, question.getId());
+                String teamAnswer = hasAnsweredQuestion.getAnswer();
+                if (!teamAnswer.isEmpty()) {
+                    boolean correctAnswer = checkAnswer(teamAnswer, question.getId());
+                    if (correctAnswer) {
+                        rightAnswers++;
+                    } else {
+                        wrongAnswers++;
+                    }
+                }
+                questionInfo.setTeamAnswer(teamAnswer);
+                questionInfoList.add(questionInfo);
+
+            }
+
+            TeamQuestionAnswers teamQuestionAnswers = new TeamQuestionAnswers();
+            teamQuestionAnswers.setNumCorrectAns(Long.valueOf(rightAnswers));
+            teamQuestionAnswers.setNumWrongAns(Long.valueOf(wrongAnswers));
+            teamQuestionAnswers.setList(questionInfoList);
+
+            return teamQuestionAnswers;
+        }catch (Exception e){
+
+        }
+        return  null;
+
+    }
+
+
+    public HasAnsweredQuestion getPuzzleAnswerStatusTeam(Long teamId,Long questionId){
+        TeamQuestion teamQuestion=new TeamQuestion();
+        teamQuestion.setTeamId(teamId);
+        teamQuestion.setQuestionId(questionId);
+        HasAnsweredQuestion hasAnsweredQuestion=
+                hasAnsweredQuestionRepository.findHasAnsweredQuestionsByTeamQuestion(teamQuestion);
+        return hasAnsweredQuestion;
+    }
+
 
 
 

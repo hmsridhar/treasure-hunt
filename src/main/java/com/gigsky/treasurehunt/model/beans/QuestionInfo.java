@@ -1,8 +1,9 @@
 package com.gigsky.treasurehunt.model.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.gigsky.treasurehunt.model.dbbeans.Question;
-
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class QuestionInfo {
     @JsonProperty
     private String type ="questionInfo";
@@ -15,6 +16,11 @@ public class QuestionInfo {
 
     @JsonProperty
     private boolean hasAnswered;
+
+    @JsonProperty
+    private String teamAnswer;
+
+
 
 
     public Long getId() {
@@ -39,5 +45,13 @@ public class QuestionInfo {
 
     public void setHasAnswered(boolean hasAnswered) {
         this.hasAnswered = hasAnswered;
+    }
+
+    public String getTeamAnswer() {
+        return teamAnswer;
+    }
+
+    public void setTeamAnswer(String teamAnswer) {
+        this.teamAnswer = teamAnswer;
     }
 }
