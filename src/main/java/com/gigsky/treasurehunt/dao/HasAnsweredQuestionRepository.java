@@ -11,7 +11,7 @@ public interface HasAnsweredQuestionRepository extends CrudRepository<HasAnswere
 
         List<HasAnsweredQuestion> findHasAnsweredQuestionsByTeamQuestion_TeamId(Long teamId);
 
-        HasAnsweredQuestion findHasAnsweredQuestionsByTeamQuestion(Long teamId,Long questionId);
+        HasAnsweredQuestion findHasAnsweredQuestionsByTeamQuestion(TeamQuestion teamQuestion);
 
 
 }

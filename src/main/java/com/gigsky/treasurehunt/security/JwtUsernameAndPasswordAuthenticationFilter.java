@@ -1,7 +1,7 @@
 package com.gigsky.treasurehunt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gigsky.treasurehunt.model.User;
+import com.gigsky.treasurehunt.model.dbbeans.User;
 import com.gigsky.treasurehunt.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -77,6 +77,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         String token = user.getToken();
         Timestamp tokenExpiryTime = user.getTokenExpiryTime();
         Long now = System.currentTimeMillis();
+        response.addHeader("teamId",user.getTeamId().toString());
         if(tokenExpiryTime != null){
             logger.info("Token exists");
             if(tokenExpiryTime.getTime() > now){
@@ -103,7 +104,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         userService.addOrUpdateUser(user);
         logger.info("Updated user data with new token");
         // Add token to header
-        response.addHeader("teamId",user.getTeamId().toString());
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
     }
 

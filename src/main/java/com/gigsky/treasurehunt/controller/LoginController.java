@@ -1,7 +1,7 @@
 package com.gigsky.treasurehunt.controller;
 
-import com.gigsky.treasurehunt.model.ResponseMessage;
-import com.gigsky.treasurehunt.model.User;
+//import com.gigsky.treasurehunt.model.ResponseMessage;
+import com.gigsky.treasurehunt.model.dbbeans.User;
 import com.gigsky.treasurehunt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

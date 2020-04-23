@@ -41,8 +41,11 @@ public class QuestionService {
     }
 
     public boolean hasAnsweredQuestion(Long teamId,Long questionId){
+        TeamQuestion teamQuestion = new TeamQuestion();
+        teamQuestion.setTeamId(teamId);
+        teamQuestion.setQuestionId(questionId);
         HasAnsweredQuestion responseStatus=
-                hasAnsweredQuestionRepository.findHasAnsweredQuestionsByTeamQuestion(teamId,questionId);
+                hasAnsweredQuestionRepository.findHasAnsweredQuestionsByTeamQuestion(teamQuestion);
 
         if(responseStatus==null){
             return false;
