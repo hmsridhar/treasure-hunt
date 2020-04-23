@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.29-log
+-- Server version	5.7.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,20 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `configurationKeyValues`
+--
+
+DROP TABLE IF EXISTS `configurationKeyValues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `configurationKeyValues` (
+  `ckey` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `has_answered_puzzle`
 --
 
@@ -26,7 +40,6 @@ CREATE TABLE `has_answered_puzzle` (
   `team_id` bigint(20) NOT NULL,
   `puzzle_id` bigint(20) NOT NULL,
   `answer` varchar(200) NOT NULL,
-  `has_used_clue` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`team_id`,`puzzle_id`),
   KEY `puzzle_id` (`puzzle_id`),
   CONSTRAINT `has_answered_puzzle_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -65,6 +78,7 @@ CREATE TABLE `puzzle` (
   `question` varchar(250) DEFAULT NULL,
   `filename` varchar(100) DEFAULT NULL,
   `points` bigint(20) NOT NULL,
+  `answer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,6 +94,7 @@ CREATE TABLE `question` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `text` varchar(255) NOT NULL,
   `answer` varchar(200) NOT NULL,
+  `clue` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -95,8 +110,9 @@ CREATE TABLE `team` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `score` bigint(20) DEFAULT '0',
+  `num_clues_taken` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,9 +124,8 @@ DROP TABLE IF EXISTS `team_members`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `team_members` (
   `team_id` bigint(20) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`team_id`,`name`),
-  CONSTRAINT `team_members_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`team_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,14 +139,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  `role` varchar(50) NOT NULL,
-  `team_id` bigint(20) NOT NULL,
-  `token` varchar(255) DEFAULT NULL,
-  `token_expiry_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `team_id` (`team_id`),
-  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `password` varchar(100) NOT NULL,
+  `team` varchar(100) DEFAULT NULL,
+  `role` varchar(45) DEFAULT NULL,
+  `token` varchar(100) DEFAULT NULL,
+  `token_expiry_time` timestamp(3) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -144,4 +157,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-22 13:49:12
+-- Dump completed on 2020-04-24  1:24:59
