@@ -54,7 +54,7 @@ public class PuzzleService {
         return false;
     }
 
-    public TeamPuzzleAnswers getPuzzleInfo(Long teamId) {
+    public TeamPuzzleAnswers getPuzzleInfoTeam(Long teamId) {
         Iterable<Puzzle> puzzleIterable = puzzleRepository.findAll();
         List<Puzzle> puzzles = new ArrayList<>();
         for (Puzzle puzzle : puzzleIterable) {

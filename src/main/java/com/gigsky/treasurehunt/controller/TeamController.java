@@ -1,9 +1,6 @@
 package com.gigsky.treasurehunt.controller;
 
-import com.gigsky.treasurehunt.model.beans.AnswerStatus;
-import com.gigsky.treasurehunt.model.beans.TeamInfo;
-import com.gigsky.treasurehunt.model.beans.TeamPoints;
-import com.gigsky.treasurehunt.model.beans.TeamScoresList;
+import com.gigsky.treasurehunt.model.beans.*;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredPuzzle;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredQuestion;
 import com.gigsky.treasurehunt.service.PuzzleService;
@@ -66,12 +63,19 @@ public class TeamController {
     @GetMapping("/{teamId}/answers")
     public ResponseEntity<?> getAnswerStatus(@PathVariable("teamId")Long teamId) throws Exception{
         try {
-            List<HasAnsweredPuzzle> puzzlesResponse = puzzleService.getAnsweredListForTeam(teamId);
+            TeamAnswers teamAnswers=new TeamAnswers();
+            TeamPuzzleAnswers teamPuzzleAnswers=puzzleService.getPuzzleInfoTeam(teamId);
+            TeamQuestionAnswers teamQuestionAnswers=questionService.getQuestionAnswersTeamInfo(teamId);
+            teamAnswers.setTeamPuzzleAnswers(teamPuzzleAnswers);
+            teamAnswers.setTeamQuestionAnswers(teamQuestionAnswers);
+
+            /*List<HasAnsweredPuzzle> puzzlesResponse = puzzleService.getAnsweredListForTeam(teamId);
             List<HasAnsweredQuestion> questionResponse = questionService.getAnsweredListForTeam(teamId);
             AnswerStatus answerStatus = new AnswerStatus();
             answerStatus.setAnsweredPuzzles(puzzlesResponse);
-            answerStatus.setAnsweredQuestions(questionResponse);
-            return new ResponseEntity<>(answerStatus,HttpStatus.OK);
+            answerStatus.setAnsweredQuestions(questionResponse);*/
+
+            return new ResponseEntity<>(teamAnswers,HttpStatus.OK);
         }catch (Exception e){
             logger.error("***exception caught"+e+"****");
         }
