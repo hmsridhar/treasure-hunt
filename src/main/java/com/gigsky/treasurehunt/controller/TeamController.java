@@ -3,10 +3,8 @@ package com.gigsky.treasurehunt.controller;
 import com.gigsky.treasurehunt.model.beans.*;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredPuzzle;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredQuestion;
-import com.gigsky.treasurehunt.service.PuzzleService;
-import com.gigsky.treasurehunt.service.QuestionService;
-import com.gigsky.treasurehunt.service.TeamMembersService;
-import com.gigsky.treasurehunt.service.TeamService;
+import com.gigsky.treasurehunt.model.dbbeans.ResponseMessage;
+import com.gigsky.treasurehunt.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -39,6 +38,8 @@ public class TeamController {
 
     @Autowired
     TeamMembersService teamMembersService;
+    @Autowired
+    UserService userService;
 
 
     @GetMapping(value = "",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +51,12 @@ public class TeamController {
 
 
     @GetMapping("/{teamId}/points")
-    public ResponseEntity<?> getTeamPoints(@PathVariable("teamId") Long teamId){
+    public ResponseEntity<?> getTeamPoints(@PathVariable("teamId") Long teamId, Principal principal){
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
        TeamPoints teampoints=teamService.getPoints(teamId);
        if(teampoints==null){
            return new ResponseEntity<>(teampoints, HttpStatus.NO_CONTENT);
@@ -61,7 +67,12 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}/answers")
-    public ResponseEntity<?> getAnswerStatus(@PathVariable("teamId")Long teamId) throws Exception{
+    public ResponseEntity<?> getAnswerStatus(@PathVariable("teamId")Long teamId, Principal principal) throws Exception{
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
         try {
             TeamAnswers teamAnswers=new TeamAnswers();
             TeamPuzzleAnswers teamPuzzleAnswers=puzzleService.getPuzzleInfoTeam(teamId);
@@ -84,7 +95,12 @@ public class TeamController {
 
 
     @GetMapping("/{teamId}")
-    public ResponseEntity<?> getTeamInfo(@PathVariable("teamId")Long teamId){
+    public ResponseEntity<?> getTeamInfo(@PathVariable("teamId")Long teamId, Principal principal){
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
         TeamInfo teamInfo=teamMembersService.getTeamInfoByTeam(teamId);
         if(teamInfo==null){
             logger.info("***teamInfo is null***");
