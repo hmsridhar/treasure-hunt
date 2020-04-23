@@ -1,7 +1,7 @@
 package com.gigsky.treasurehunt.service;
 
 import com.gigsky.treasurehunt.dao.UserRepository;
-import com.gigsky.treasurehunt.model.User;
+import com.gigsky.treasurehunt.model.dbbeans.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

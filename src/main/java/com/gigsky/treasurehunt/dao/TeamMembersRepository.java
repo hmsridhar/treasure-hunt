@@ -1,17 +1,18 @@
 package com.gigsky.treasurehunt.dao;
 
-import com.gigsky.treasurehunt.model.TeamMembers;
+import com.gigsky.treasurehunt.model.dbbeans.TeamMembers;
+import com.gigsky.treasurehunt.model.dbbeans.TeamMembersKey;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by harshams on 21/04/2020
  */
 @Repository
-public interface TeamMembersRepository extends CrudRepository<TeamMembers,Long> {
+public interface TeamMembersRepository extends CrudRepository<TeamMembers, TeamMembersKey> {
 
-    Iterable<TeamMembers> findAllByTeamId(Long teamId);
+    List<TeamMembers> findTeamMembersByTeamMembersKey_TeamId(Long teamId);
+
 }

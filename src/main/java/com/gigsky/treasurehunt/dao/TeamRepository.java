@@ -1,6 +1,6 @@
 package com.gigsky.treasurehunt.dao;
 
-import com.gigsky.treasurehunt.model.Team;
+import com.gigsky.treasurehunt.model.dbbeans.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +12,7 @@ import java.util.List;
 @Repository
 public interface TeamRepository extends CrudRepository<Team,Long> {
 
+    Team findTeamById(Long teamId);
+
+    List<Team> findAllByOrderByScoreDesc();
 }

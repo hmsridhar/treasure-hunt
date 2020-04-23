@@ -1,5 +1,6 @@
 package com.gigsky.treasurehunt.controller;
 
+import com.gigsky.treasurehunt.model.beans.TeamInfo;
 import com.gigsky.treasurehunt.service.TeamMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
