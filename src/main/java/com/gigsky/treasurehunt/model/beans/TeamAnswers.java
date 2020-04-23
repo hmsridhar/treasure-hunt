@@ -8,8 +8,7 @@ public class TeamAnswers {
     @JsonProperty
     private TeamPuzzleAnswers teamPuzzleAnswers;
 
-    @JsonProperty
-    private TeamQuestionAnswers teamQuestionAnswers;
+
 
     public TeamPuzzleAnswers getTeamPuzzleAnswers() {
         return teamPuzzleAnswers;
@@ -19,11 +18,5 @@ public class TeamAnswers {
         this.teamPuzzleAnswers = teamPuzzleAnswers;
     }
 
-    public TeamQuestionAnswers getTeamQuestionAnswers() {
-        return teamQuestionAnswers;
-    }
 
-    public void setTeamQuestionAnswers(TeamQuestionAnswers teamQuestionAnswers) {
-        this.teamQuestionAnswers = teamQuestionAnswers;
-    }
 }

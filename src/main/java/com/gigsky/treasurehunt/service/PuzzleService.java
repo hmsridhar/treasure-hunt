@@ -89,7 +89,7 @@ public class PuzzleService {
 
         }
         teamPuzzleAnswers.setNumcorrectAns(Long.valueOf(rightAnswers));
-        teamPuzzleAnswers.setNumWrongAns(Long.valueOf(wrongAnswers));
+
         teamPuzzleAnswers.setList(puzzleInfos);
 
         return teamPuzzleAnswers;

@@ -11,8 +11,7 @@ public class TeamPuzzleAnswers {
     private String type="puzzleAnswers";
     @JsonProperty
     private Long numcorrectAns=0L;
-    @JsonProperty
-    private Long numWrongAns=0L;
+
     @JsonProperty
     private List<PuzzleInfo> list;
 
@@ -24,13 +23,7 @@ public class TeamPuzzleAnswers {
         this.numcorrectAns = numcorrectAns;
     }
 
-    public Long getNumWrongAns() {
-        return numWrongAns;
-    }
 
-    public void setNumWrongAns(Long numWrongAns) {
-        this.numWrongAns = numWrongAns;
-    }
 
     public List<PuzzleInfo> getList() {
         return list;

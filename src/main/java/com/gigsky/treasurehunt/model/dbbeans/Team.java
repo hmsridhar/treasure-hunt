@@ -19,6 +19,9 @@ public class Team {
     @Column
     private Long score;
 
+    @Column(name = "num_clues_taken")
+    private Integer numClues;
+
     public Long getId() {
         return id;
     }
@@ -41,6 +44,14 @@ public class Team {
 
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public Integer getNumClues() {
+        return numClues;
+    }
+
+    public void setNumClues(Integer numClues) {
+        this.numClues = numClues;
     }
 
     @Override

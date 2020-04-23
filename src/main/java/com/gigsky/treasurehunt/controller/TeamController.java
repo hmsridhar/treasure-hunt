@@ -65,9 +65,9 @@ public class TeamController {
         try {
             TeamAnswers teamAnswers=new TeamAnswers();
             TeamPuzzleAnswers teamPuzzleAnswers=puzzleService.getPuzzleInfoTeam(teamId);
-            TeamQuestionAnswers teamQuestionAnswers=questionService.getQuestionAnswersTeamInfo(teamId);
+            //TeamQuestionAnswers teamQuestionAnswers=questionService.getQuestionAnswersTeamInfo(teamId);
             teamAnswers.setTeamPuzzleAnswers(teamPuzzleAnswers);
-            teamAnswers.setTeamQuestionAnswers(teamQuestionAnswers);
+            //teamAnswers.setTeamQuestionAnswers(teamQuestionAnswers);
 
             /*List<HasAnsweredPuzzle> puzzlesResponse = puzzleService.getAnsweredListForTeam(teamId);
             List<HasAnsweredQuestion> questionResponse = questionService.getAnsweredListForTeam(teamId);

@@ -9,7 +9,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "question")
+    @Column(name = "text")
     private String question;
 
     @Column(name = "answer")
