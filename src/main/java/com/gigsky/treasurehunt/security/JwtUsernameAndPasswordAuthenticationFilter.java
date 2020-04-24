@@ -2,11 +2,13 @@ package com.gigsky.treasurehunt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gigsky.treasurehunt.model.dbbeans.User;
+import com.gigsky.treasurehunt.service.ConfigurationKeyValuesService;
 import com.gigsky.treasurehunt.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +35,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     private AuthenticationManager authManager;
     private JwtConfig jwtConfig;
+    private ConfigurationKeyValuesService configurationKeyValuesService;
 
     UserService userService;
 
@@ -42,6 +45,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         this.authManager = authManager;
         this.jwtConfig = jwtConfig;
         this.userService = context.getBean(UserService.class);
+        this.configurationKeyValuesService = context.getBean(ConfigurationKeyValuesService.class);
 
         // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         // In our case, we use "/auth". So, we need to override the defaults.
@@ -78,6 +82,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         Timestamp tokenExpiryTime = user.getTokenExpiryTime();
         Long now = System.currentTimeMillis();
         response.addHeader("teamId",user.getTeamId().toString());
+        response.addHeader("currentDay",configurationKeyValuesService.getStringConfigValue("day"));
+        response.addHeader("teamDay",configurationKeyValuesService.getStringConfigValue(user.getUsername()+"-day"));
+        response.addHeader("teamStage",configurationKeyValuesService.getStringConfigValue(user.getUsername()+"-stage"));
         if(tokenExpiryTime != null){
             logger.info("Token exists");
             if(tokenExpiryTime.getTime() > now){
