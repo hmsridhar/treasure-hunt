@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,6 +42,8 @@ public class TeamController {
     TeamMembersService teamMembersService;
     @Autowired
     UserService userService;
+    @Autowired
+    ConfigurationKeyValuesService configurationKeyValuesService;
 
 
     @GetMapping(value = "",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -125,21 +128,39 @@ public class TeamController {
 
     }
 
-    @PostMapping("/{teamId}/upload")
-    public ResponseEntity<?> uploadTeamImage(@RequestParam("file")MultipartFile file){
+    @PostMapping(value = "/{teamId}/upload",consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadTeamImage(@PathVariable Long teamId, @RequestParam("file")MultipartFile file, Principal principal){
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
         ResponseMessage responseMessage = new ResponseMessage();
+        Integer day = configurationKeyValuesService.getIntegerConfigValue("day");
+        String imagepath = configurationKeyValuesService.getStringConfigValue(principal.getName()+"-img"+day);
+        if(!imagepath.equals("")){
+            responseMessage.setMessage("Image already uploaded");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
         if(file.isEmpty()){
             responseMessage.setMessage("Invalid Image");
             return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
         }
         try {
+            String fileType = file.getContentType();
+            if(!Arrays.asList("image/png","image/jpg","image/jpeg").contains(fileType)){
+                responseMessage.setMessage("Invalid file type");
+                return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+            }
             byte[] bytes = file.getBytes();
             Path path = Paths.get(""+file.getOriginalFilename());
             Files.write(path,bytes);
             System.out.println(path);
+            configurationKeyValuesService.updateConfigValue(principal.getName()+"-img"+day,path.toString());
             responseMessage.setMessage("Image upload successful!");
             return new ResponseEntity<>(responseMessage,HttpStatus.OK);
         }catch (Exception e){
+            logger.error("Exception occurred ",e);
             responseMessage.setMessage("could not upload file");
             return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
         }

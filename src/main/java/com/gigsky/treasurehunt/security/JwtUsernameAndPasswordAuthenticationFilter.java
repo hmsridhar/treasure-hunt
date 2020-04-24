@@ -82,9 +82,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         Timestamp tokenExpiryTime = user.getTokenExpiryTime();
         Long now = System.currentTimeMillis();
         response.addHeader("teamId",user.getTeamId().toString());
-        response.addHeader("currentDay",configurationKeyValuesService.getStringConfigValue("day"));
+        String day = configurationKeyValuesService.getStringConfigValue("day");
+        response.addHeader("currentDay",day);
         response.addHeader("teamDay",configurationKeyValuesService.getStringConfigValue(user.getUsername()+"-day"));
         response.addHeader("teamStage",configurationKeyValuesService.getStringConfigValue(user.getUsername()+"-stage"));
+        response.addHeader("teamImageUploadStatus",configurationKeyValuesService.getStringConfigValue(user.getUsername()+"-img"+day).equals("")?"pending":"done");
         if(tokenExpiryTime != null){
             logger.info("Token exists");
             if(tokenExpiryTime.getTime() > now){
