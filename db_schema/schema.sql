@@ -143,7 +143,7 @@ CREATE TABLE `user` (
   `password` varchar(150) NOT NULL,
   `team_id` bigint(20) NOT NULL,
   `role` varchar(45) DEFAULT 'TEAM',
-  `token` varchar(150) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
   `token_expiry_time` timestamp(3) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `team_id` (`team_id`),
@@ -160,4 +160,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24 11:29:58
+-- Dump completed on 2020-04-24 14:45:18

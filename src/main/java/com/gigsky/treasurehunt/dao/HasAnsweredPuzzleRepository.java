@@ -9,5 +9,7 @@ import java.util.List;
 public interface HasAnsweredPuzzleRepository extends CrudRepository<HasAnsweredPuzzle, TeamPuzzle> {
     //List<HasAnsweredPuzzle> findHasAnsweredPuzzleByTeamId(Long teamId);
     List<HasAnsweredPuzzle> findHasAnsweredPuzzleByTeamPuzzle_TeamId(Long teamId);
-    HasAnsweredPuzzle findByTeamPuzzle_TeamIdAAndTeamPuzzle_PuzzleId(Long teamId,Long puzzleId);
+//    HasAnsweredPuzzle findByTeamPuzzle_TeamIdAAndTeamPuzzle_PuzzleId(Long teamId,Long puzzleId);
+
+    HasAnsweredPuzzle findByTeamPuzzle(TeamPuzzle teamPuzzle);
 }

@@ -30,12 +30,12 @@ public class PuzzleService {
 
 
 
-    public List<HasAnsweredPuzzle> getAnsweredListForTeam(Long teamId){
-
-        List<HasAnsweredPuzzle>answeredPuzzlesByTeam=hasAnsweredPuzzleRepository.findHasAnsweredPuzzleByTeamPuzzle_TeamId(teamId);
-
-        return answeredPuzzlesByTeam;
-    }
+//    public List<HasAnsweredPuzzle> getAnsweredListForTeam(Long teamId){
+//
+//        List<HasAnsweredPuzzle>answeredPuzzlesByTeam=hasAnsweredPuzzleRepository.findHasAnsweredPuzzleByTeamPuzzle_TeamId(teamId);
+//
+//        return answeredPuzzlesByTeam;
+//    }
 
     public boolean submitAnswer(Long puzzleId, Long teamId, Answer answer){
         try {
@@ -107,8 +107,12 @@ public class PuzzleService {
     }
 
     public HasAnsweredPuzzle getPuzzleAnswerStatusTeam(Long teamId,Long puzzleId){
+        TeamPuzzle teamPuzzle = new TeamPuzzle();
+        teamPuzzle.setTeamId(teamId);
+        teamPuzzle.setPuzzleId(puzzleId);
          HasAnsweredPuzzle hasAnsweredPuzzle=
-                 hasAnsweredPuzzleRepository.findByTeamPuzzle_TeamIdAAndTeamPuzzle_PuzzleId(teamId,puzzleId);
+//                 hasAnsweredPuzzleRepository.findByTeamPuzzle_TeamIdAAndTeamPuzzle_PuzzleId(teamId,puzzleId);
+            hasAnsweredPuzzleRepository.findByTeamPuzzle(teamPuzzle);
          return hasAnsweredPuzzle;
         }
 
