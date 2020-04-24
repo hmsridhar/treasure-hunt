@@ -24,8 +24,6 @@ public class ConfigController {
         Integer day = configurationKeyValuesService.getIntegerConfigValue("day");
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(day.toString());
-        if(true)
-            throw new Exception();
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 }
