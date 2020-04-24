@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `configurationKeyValues`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `configurationKeyValues` (
   `ckey` varchar(255) NOT NULL,
-  `value` text NOT NULL,
+  `value` varchar(255) NOT NULL,
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,7 +125,8 @@ DROP TABLE IF EXISTS `team_members`;
 CREATE TABLE `team_members` (
   `team_id` bigint(20) NOT NULL,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`team_id`,`name`)
+  PRIMARY KEY (`team_id`,`name`),
+  CONSTRAINT `team_members_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,7 +148,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `team_id` (`team_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -159,4 +160,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24  2:09:35
+-- Dump completed on 2020-04-24 11:29:58
