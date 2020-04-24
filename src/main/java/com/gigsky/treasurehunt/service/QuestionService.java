@@ -68,15 +68,24 @@ public class QuestionService {
 
     public boolean submitAnswer(Long questionId, Long teamId, Answer answer){
         try {
-            String answerForQuestion = answer.getAnswer();
-            TeamQuestion teamQuestion = new TeamQuestion();
-            teamQuestion.setQuestionId(questionId);
-            teamQuestion.setTeamId(teamId);
-            HasAnsweredQuestion hasAnsweredQuestion = new HasAnsweredQuestion();
-            hasAnsweredQuestion.setAnswer(answerForQuestion);
-            hasAnsweredQuestion.setTeamQuestion(teamQuestion);
-            hasAnsweredQuestionRepository.save(hasAnsweredQuestion);
-            return true;
+            String teamAnswer = answer.getAnswer();
+            //check if answer correct or wrong.If wrong return error msg , else save and return success msg.
+            boolean ansCorrect=checkAnswer(teamAnswer,questionId);
+            if(ansCorrect) {
+                TeamQuestion teamQuestion = new TeamQuestion();
+                teamQuestion.setQuestionId(questionId);
+                teamQuestion.setTeamId(teamId);
+                HasAnsweredQuestion hasAnsweredQuestion = new HasAnsweredQuestion();
+                hasAnsweredQuestion.setAnswer(teamAnswer);
+                hasAnsweredQuestion.setTeamQuestion(teamQuestion);
+                hasAnsweredQuestionRepository.save(hasAnsweredQuestion);
+                return true;
+            }
+            else{
+                return false;
+            }
+
+
         }catch (Exception e){
 
         }

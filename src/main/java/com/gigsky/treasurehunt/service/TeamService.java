@@ -71,11 +71,11 @@ public class TeamService {
 
     }
 
-    public void updatePointsReduceByCluePoints(Long teamId,Integer puzzlesToSolve){
+    public void updatePointsReduceByCluePoints(Long teamId,Integer coins){
         Team team=teamRepository.findTeamById(teamId);
         //get from config points to cut
 
-        team.setScore(team.getScore()-puzzlesToSolve);
+        team.setScore(team.getScore()-coins);
         teamRepository.save(team);
 
     }

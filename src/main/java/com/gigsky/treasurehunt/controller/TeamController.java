@@ -45,6 +45,7 @@ public class TeamController {
 
     @GetMapping(value = "",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getTeams(){
+
         return new ResponseEntity<>(teamService.getAllTeams(), HttpStatus.OK);
     }
 
@@ -113,6 +114,7 @@ public class TeamController {
 
     @GetMapping("/score")
     public ResponseEntity<?> generateLeaderBoard(){
+
        TeamScoresList teamScoresList=teamService.generateLeaderBoard();
        if(teamScoresList.getList().size()==0){
            return new ResponseEntity<>(teamScoresList,HttpStatus.NO_CONTENT);

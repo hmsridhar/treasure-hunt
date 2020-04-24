@@ -17,6 +17,9 @@ public class HasAnsweredQuestion implements Serializable {
     @Column(name = "answer")
     private String answer;
 
+    @Column(name = "has_answered")
+    private boolean hasAnswered;
+
     public TeamQuestion getTeamQuestion() {
         return teamQuestion;
     }
@@ -31,5 +34,13 @@ public class HasAnsweredQuestion implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public boolean isHasAnswered() {
+        return hasAnswered;
+    }
+
+    public void setHasAnswered(boolean hasAnswered) {
+        this.hasAnswered = hasAnswered;
     }
 }

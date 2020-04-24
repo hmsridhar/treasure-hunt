@@ -16,6 +16,12 @@ public class HasAnsweredPuzzle implements Serializable {
     @Column(name = "answer")
     private String answer;
 
+    @Column(name = "attempts")
+    private Long attempts;
+
+    @Column(name = "has_answered")
+    private boolean hasAnswered;
+
     public TeamPuzzle getTeamPuzzle() {
         return teamPuzzle;
     }
@@ -30,5 +36,21 @@ public class HasAnsweredPuzzle implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public Long getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(Long attempts) {
+        this.attempts = attempts;
+    }
+
+    public boolean isHasAnswered() {
+        return hasAnswered;
+    }
+
+    public void setHasAnswered(boolean hasAnswered) {
+        this.hasAnswered = hasAnswered;
     }
 }
