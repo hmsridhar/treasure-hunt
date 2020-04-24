@@ -3,7 +3,9 @@ package com.gigsky.treasurehunt.controller;
 
 //import com.gigsky.treasurehunt.model.ResponseMessage;
 
+import com.gigsky.treasurehunt.model.dbbeans.ConfigurationKeyValues;
 import com.gigsky.treasurehunt.model.dbbeans.User;
+import com.gigsky.treasurehunt.service.ConfigurationKeyValuesService;
 import com.gigsky.treasurehunt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    ConfigurationKeyValuesService configurationKeyValuesService;
     private BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
 
 //    @PostMapping(value = "/login",produces = "application/json")
@@ -43,6 +47,14 @@ public class LoginController {
 //        user.setId(0L);
         user.setPassword(password);
         userService.addOrUpdateUser(user);
+        ConfigurationKeyValues keyValue = new ConfigurationKeyValues();
+        keyValue.setKey(user.getUsername()+"-stage");
+        keyValue.setValue("1");
+        configurationKeyValuesService.saveConfigKeyValue(keyValue);
+        keyValue = new ConfigurationKeyValues();
+        keyValue.setKey(user.getUsername()+"-day");
+        keyValue.setValue("1");
+        configurationKeyValuesService.saveConfigKeyValue(keyValue);
         return new ResponseEntity<>("User Added Successfully",HttpStatus.OK);
     }
 }

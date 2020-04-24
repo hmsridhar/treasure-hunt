@@ -27,4 +27,8 @@ public class ConfigurationKeyValuesService {
         return configurationKeyValues == null ? null : Integer.parseInt(configurationKeyValues.getValue());
     }
 
+    public void saveConfigKeyValue(ConfigurationKeyValues configurationKeyValues){
+        configurationKeyValuesRepository.save(configurationKeyValues);
+    }
+
 }
