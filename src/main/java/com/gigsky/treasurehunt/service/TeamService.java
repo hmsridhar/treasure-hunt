@@ -1,12 +1,15 @@
 package com.gigsky.treasurehunt.service;
 
+import com.gigsky.treasurehunt.dao.ConfigurationKeyValuesRepository;
 import com.gigsky.treasurehunt.dao.TeamRepository;
 import com.gigsky.treasurehunt.model.beans.*;
+import com.gigsky.treasurehunt.model.dbbeans.ConfigurationKeyValues;
 import com.gigsky.treasurehunt.model.dbbeans.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,9 @@ public class TeamService {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    ConfigurationKeyValuesRepository configurationKeyValuesRepository;
 
     public ObjectList getAllTeams(){
         ObjectList objectList = new ObjectList();
@@ -62,6 +68,15 @@ public class TeamService {
         }
         teamScoresList.setList(teamScoreList);
         return teamScoresList;
+
+    }
+
+    public void updatePointsReduceByCluePoints(Long teamId,Integer puzzlesToSolve){
+        Team team=teamRepository.findTeamById(teamId);
+        //get from config points to cut
+
+        team.setScore(team.getScore()-puzzlesToSolve);
+        teamRepository.save(team);
 
     }
 

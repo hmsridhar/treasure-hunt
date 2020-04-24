@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.29-log
+-- Server version	5.7.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `configurationKeyValues` WRITE;
 /*!40000 ALTER TABLE `configurationKeyValues` DISABLE KEYS */;
-INSERT INTO `configurationKeyValues` VALUES ('Aaryavarta-day','1'),('Aaryavarta-stage','1'),('Akhandadweepa-day','1'),('Akhandadweepa-stage','1'),('day','1'),('DevaBhumi-day','1'),('DevaBhumi-stage','1'),('Karusha-day','1'),('Karusha-stage','1'),('key1','23'),('key2','46'),('key3','90'),('Mahishaka-day','1'),('Mahishaka-stage','1'),('Nishada-day','1'),('Nishada-stage','1'),('Shalwa-day','1'),('Shalwa-stage','1');
+INSERT INTO `configurationKeyValues` VALUES ('Aaryavarta-day','1'),('Aaryavarta-stage','1'),('Akhandadweepa-day','1'),('Akhandadweepa-stage','1'),('day','1'),('DevaBhumi-day','1'),('DevaBhumi-stage','1'),('Karusha-day','1'),('Karusha-stage','1'),('key1','23'),('key2','46'),('key3','90'),('Mahishaka-day','1'),('Mahishaka-stage','1'),('Nishada-day','1'),('Nishada-stage','1'),('PUZZLES_REQ_UNLOCK_CLUE','8'),('Shalwa-day','1'),('Shalwa-stage','1');
 /*!40000 ALTER TABLE `configurationKeyValues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,4 +100,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24 15:59:58
+-- Dump completed on 2020-04-24 22:16:30
