@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	5.7.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -110,9 +110,9 @@ CREATE TABLE `team` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `score` bigint(20) DEFAULT '0',
-  `num_clues_taken` int(11) NOT NULL,
+  `num_clues_taken` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,12 +139,14 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `team` varchar(100) DEFAULT NULL,
-  `role` varchar(45) DEFAULT NULL,
-  `token` varchar(100) DEFAULT NULL,
+  `password` varchar(150) NOT NULL,
+  `team_id` bigint(20) NOT NULL,
+  `role` varchar(45) DEFAULT 'TEAM',
+  `token` varchar(150) DEFAULT NULL,
   `token_expiry_time` timestamp(3) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `team_id` (`team_id`),
+  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -157,4 +159,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-24  1:24:59
+-- Dump completed on 2020-04-24  2:09:35
