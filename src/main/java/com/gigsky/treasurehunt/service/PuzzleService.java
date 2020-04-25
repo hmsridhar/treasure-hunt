@@ -53,6 +53,10 @@ public class PuzzleService {
             teamPuzzle.setTeamId(teamId);
             teamPuzzle.setPuzzleId(puzzleId);
             HasAnsweredPuzzle puzzleInfoTeam=hasAnsweredPuzzleRepository.findByTeamPuzzle(teamPuzzle);
+            if(puzzleInfoTeam.isHasAnswered()){
+                responseMessage.setMessage("Puzzle already answered");
+                return responseMessage;
+            }
             //if its first attempt, then value will be null.so need to add initially.
             if(puzzleInfoTeam==null){
                 puzzleInfoTeam=addFirstAttempt(teamPuzzle);
@@ -119,44 +123,71 @@ public class PuzzleService {
     }
 
     public TeamPuzzleAnswers getPuzzleInfoTeam(Long teamId) {
-        Iterable<Puzzle> puzzleIterable = puzzleRepository.findAll();
-        List<Puzzle> puzzles = new ArrayList<>();
-        for (Puzzle puzzle : puzzleIterable) {
-            if (puzzle != null) {
-                puzzles.add(puzzle);
-            }
-        }
-        int rightAnswers=0;
-        int wrongAnswers=0;
-        TeamPuzzleAnswers teamPuzzleAnswers=new TeamPuzzleAnswers();
-        List<PuzzleInfo>puzzleInfos=new ArrayList<>();
-        for (Puzzle puzzle : puzzles) {
-            PuzzleInfo puzzleInfo = new PuzzleInfo();
-            puzzleInfo.setId(puzzle.getId());
-            puzzleInfo.setFilename(puzzle.getFilename());
-            puzzleInfo.setPoints(puzzle.getPoints());
-            puzzleInfo.setQuestion(puzzle.getQuestion());
-            HasAnsweredPuzzle hasAnsweredPuzzle = getPuzzleAnswerStatusTeam(teamId,puzzle.getId());
-            String teamAnswer=hasAnsweredPuzzle.getAnswer();
-            puzzleInfo.setTeamAnswer(teamAnswer);
-            if(!teamAnswer.isEmpty()) {
-                boolean correctAnswer = checkAnswer(teamAnswer, puzzle.getId());
-                if(correctAnswer){
-                    rightAnswers++;
-                }
-                else
-                {
-                    wrongAnswers++;
+        try {
+            Iterable<Puzzle> puzzleIterable = puzzleRepository.findAll();
+            List<Puzzle> puzzles = new ArrayList<>();
+            for (Puzzle puzzle : puzzleIterable) {
+                if (puzzle != null) {
+                    puzzles.add(puzzle);
                 }
             }
-            puzzleInfos.add(puzzleInfo);
+            int rightAnswers = 0;
+            int wrongAnswers = 0;
+            TeamPuzzleAnswers teamPuzzleAnswers = new TeamPuzzleAnswers();
+            List<PuzzleInfo> puzzleInfos = new ArrayList<>();
+            for (Puzzle puzzle : puzzles) {
+                PuzzleInfo puzzleInfo = new PuzzleInfo();
+                if (puzzle != null) {
+                    if (puzzle.getId() == null) {
+                        continue;
+                    }
+                    puzzleInfo.setId(puzzle.getId());
+                    if(puzzle.getFilename()!=null) {
+                        puzzleInfo.setFilename(puzzle.getFilename());
+                    }
+                    if(puzzle.getPoints()!=null) {
+                        puzzleInfo.setPoints(puzzle.getPoints());
+                    }
+                    if(puzzle.getQuestion()!=null) {
+                        puzzleInfo.setQuestion(puzzle.getQuestion());
+                    }
+                    if(puzzle.getPoints()!=null) {
+                        puzzleInfo.setType(puzzle.getType());
+                    }
 
+                    HasAnsweredPuzzle hasAnsweredPuzzle = getPuzzleAnswerStatusTeam(teamId, puzzle.getId());
+                    if(hasAnsweredPuzzle!=null) {
+                        String teamAnswer = hasAnsweredPuzzle.getAnswer();
+
+                        puzzleInfo.setHasAnswered(hasAnsweredPuzzle.isHasAnswered());
+
+                        //set max attempts to true if max attempts reached
+                        Long maxAttemptsAllowed = Long.valueOf(configurationKeyValuesService.getIntegerConfigValue(MAX_ATTEMPTS_PUZZLE));
+
+                        if (hasAnsweredPuzzle.getAttempts() >= maxAttemptsAllowed) {
+                            puzzleInfo.setMaxAttemptsReached(true);
+                        }
+                        if(teamAnswer!=null) {
+                            puzzleInfo.setTeamAnswer(teamAnswer);
+                        }
+                        if (hasAnsweredPuzzle.isHasAnswered()) {
+                            rightAnswers++;
+                        }
+                    }
+
+                    puzzleInfos.add(puzzleInfo);
+                }
+
+            }
+            teamPuzzleAnswers.setNumcorrectAns(Long.valueOf(rightAnswers));
+
+            teamPuzzleAnswers.setList(puzzleInfos);
+
+            return teamPuzzleAnswers;
+        }catch (Exception e){
+            logger.error("exception"+e);
+            throw  e;
         }
-        teamPuzzleAnswers.setNumcorrectAns(Long.valueOf(rightAnswers));
-
-        teamPuzzleAnswers.setList(puzzleInfos);
-
-        return teamPuzzleAnswers;
     }
 
     private boolean checkAnswer(String teamAnswer,Long id) {
@@ -191,7 +222,7 @@ public class PuzzleService {
             List<PuzzleInfo>puzzleList=new ArrayList<>();
             for(Puzzle puzzle:puzzles){
                PuzzleInfo puzzleInfo=new PuzzleInfo();
-               puzzleInfo.setTeamAnswer(puzzle.getAnswer());
+               //puzzleInfo.setTeamAnswer(puzzle.getAnswer());
                puzzleInfo.setQuestion(puzzle.getQuestion());
                puzzleInfo.setPoints(puzzle.getPoints());
                puzzleInfo.setFilename(puzzle.getFilename());

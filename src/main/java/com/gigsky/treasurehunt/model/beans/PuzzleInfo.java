@@ -25,6 +25,12 @@ public class PuzzleInfo {
     @JsonProperty
     private String teamAnswer;
 
+    @JsonProperty
+    private boolean maxAttemptsReached=false;
+
+    @JsonProperty
+    private boolean hasAnswered=false;
+
 
     public Long getId() {
         return id;
@@ -73,5 +79,22 @@ public class PuzzleInfo {
 
     public void setTeamAnswer(String teamAnswer) {
         this.teamAnswer = teamAnswer;
+    }
+
+
+    public boolean isMaxAttemptsReached() {
+        return maxAttemptsReached;
+    }
+
+    public void setMaxAttemptsReached(boolean maxAttemptsReached) {
+        this.maxAttemptsReached = maxAttemptsReached;
+    }
+
+    public boolean isHasAnswered() {
+        return hasAnswered;
+    }
+
+    public void setHasAnswered(boolean hasAnswered) {
+        this.hasAnswered = hasAnswered;
     }
 }

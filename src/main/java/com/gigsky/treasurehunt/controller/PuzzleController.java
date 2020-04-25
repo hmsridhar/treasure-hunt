@@ -4,6 +4,7 @@ package com.gigsky.treasurehunt.controller;
 import com.gigsky.treasurehunt.dao.PuzzleRepository;
 import com.gigsky.treasurehunt.model.beans.Answer;
 import com.gigsky.treasurehunt.model.beans.PuzzleList;
+import com.gigsky.treasurehunt.model.beans.TeamPuzzleAnswers;
 import com.gigsky.treasurehunt.model.dbbeans.Puzzle;
 import com.gigsky.treasurehunt.model.dbbeans.ResponseMessage;
 import com.gigsky.treasurehunt.service.PuzzleService;
@@ -32,12 +33,22 @@ public class PuzzleController {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "")
-    public ResponseEntity<?>getPuzzles(){
-      PuzzleList puzzleList=puzzleService.getAllPuzzles();
-      return new ResponseEntity<>(puzzleList,HttpStatus.OK);
+    @GetMapping(value = "/{teamId}")
+    public ResponseEntity<?>getPuzzles(@PathVariable("teamId")Long teamId,Principal principal){
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
+
+      TeamPuzzleAnswers puzzlesList=puzzleService.getPuzzleInfoTeam(teamId);
+      return new ResponseEntity<>(puzzlesList,HttpStatus.OK);
 
     }
+
+
+
+
 
 
     @PostMapping(value = "/{teamId}/{puzzleId}/answer")

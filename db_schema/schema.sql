@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `has_answered_puzzle`;
 CREATE TABLE `has_answered_puzzle` (
   `team_id` bigint(20) NOT NULL,
   `puzzle_id` bigint(20) NOT NULL,
-  `answer` varchar(200) NOT NULL,
+  `answer` varchar(200) DEFAULT NULL,
   `attempts` bigint(20) NOT NULL DEFAULT '0',
-  `has_answered` tinyint(4) NOT NULL,
+  `has_answered` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`team_id`,`puzzle_id`),
   KEY `puzzle_id` (`puzzle_id`),
   CONSTRAINT `has_answered_puzzle_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `has_answered_question`;
 CREATE TABLE `has_answered_question` (
   `team_id` bigint(20) NOT NULL,
   `question_id` bigint(20) NOT NULL,
-  `answer` varchar(200) NOT NULL,
+  `answer` varchar(200) DEFAULT NULL,
   `has_answered` tinyint(4) NOT NULL,
   PRIMARY KEY (`team_id`,`question_id`),
   KEY `question_id` (`question_id`),
@@ -164,4 +164,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25 20:26:24
+-- Dump completed on 2020-04-26  2:18:33
