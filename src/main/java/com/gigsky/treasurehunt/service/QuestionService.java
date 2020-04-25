@@ -91,6 +91,7 @@ public class QuestionService {
                 HasAnsweredQuestion hasAnsweredQuestion = new HasAnsweredQuestion();
                 hasAnsweredQuestion.setAnswer(teamAnswer);
                 hasAnsweredQuestion.setTeamQuestion(teamQuestion);
+                hasAnsweredQuestion.setHasAnswered(true);
                 hasAnsweredQuestionRepository.save(hasAnsweredQuestion);
                 return true;
             }

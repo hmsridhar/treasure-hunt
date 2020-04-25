@@ -53,6 +53,13 @@ public class PuzzleService {
             teamPuzzle.setTeamId(teamId);
             teamPuzzle.setPuzzleId(puzzleId);
             HasAnsweredPuzzle puzzleInfoTeam=hasAnsweredPuzzleRepository.findByTeamPuzzle(teamPuzzle);
+            //if its first attempt, then value will be null.so need to add initially.
+            if(puzzleInfoTeam==null){
+                puzzleInfoTeam=addFirstAttempt(teamPuzzle);
+            }
+            if(puzzleInfoTeam==null){
+                return null;
+            }
             Long attempts=puzzleInfoTeam.getAttempts();
             //check if max attempts reached
             Integer maxAttempts=configurationKeyValuesService.getIntegerConfigValue(MAX_ATTEMPTS_PUZZLE);
@@ -91,8 +98,24 @@ public class PuzzleService {
 
         }catch (Exception e){
             logger.error("exception "+e);
+            throw  e;
         }
-        return null;
+
+    }
+
+    private HasAnsweredPuzzle addFirstAttempt(TeamPuzzle teamPuzzle) {
+        try {
+            HasAnsweredPuzzle hasAnsweredPuzzle = new HasAnsweredPuzzle();
+            hasAnsweredPuzzle.setAttempts((long) 0);
+            hasAnsweredPuzzle.setHasAnswered(false);
+            hasAnsweredPuzzle.setTeamPuzzle(teamPuzzle);
+            hasAnsweredPuzzleRepository.save(hasAnsweredPuzzle);
+            return hasAnsweredPuzzle;
+        }catch (Exception e){
+            logger.error("exception"+e);
+            throw e;
+        }
+
     }
 
     public TeamPuzzleAnswers getPuzzleInfoTeam(Long teamId) {
@@ -144,7 +167,8 @@ public class PuzzleService {
 
         String[] listOfAnswers=puzzle.getAnswer().split(",");
         List<String> answersList= Arrays.asList(listOfAnswers);
-        if(answersList.contains(teamAnswer.toLowerCase())){
+        teamAnswer=teamAnswer.toLowerCase();
+        if(answersList.contains(teamAnswer)){
             return true;
         }
         return  false;

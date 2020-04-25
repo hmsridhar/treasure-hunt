@@ -41,7 +41,6 @@ public class PuzzleController {
 
 
     @PostMapping(value = "/{teamId}/{puzzleId}/answer")
-
     public ResponseEntity<?> submitAnswerPuzzle(@PathVariable("puzzleId")Long puzzleId, @PathVariable("teamId")Long teamId, @RequestBody Answer answer, Principal principal){
         if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
             ResponseMessage responseMessage = new ResponseMessage();
