@@ -120,20 +120,39 @@ public class QuestionController {
 
     }
 
-    @PostMapping("/{teamId}/{questionId}/answer")
-    public ResponseEntity<?> submitAnswerQuestion(@PathVariable("teamId")Long teamId, @PathVariable("questionId")Long questionId,@RequestBody Answer answer,Principal principal){
+    @PostMapping("/{teamId}/answer")
+    public ResponseEntity<?> submitAnswerQuestion(@PathVariable("teamId")Long teamId,@RequestBody Answer answer,Principal principal){
         if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setMessage("INVALID DATA ACCESS!");
             return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
         }
+        if(!configurationKeyValuesService.isMoveValid(teamId,3)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+        Integer currentDay = configurationKeyValuesService.getIntegerConfigValue("day");
+        String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+        Integer teamDay = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
+        if(teamDay > currentDay){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+
+        Long questionId = questionService.getQuestionForDay(teamDay).getId();
         boolean result=questionService.submitAnswer(questionId,teamId,answer);
         ResponseMessage responseMessage=new ResponseMessage();
         if(result) {
             responseMessage.setMessage(successMessage);
+            Integer stage = configurationKeyValuesService.getIntegerConfigValue(teamName+"-stage");
+            stage++;
+            configurationKeyValuesService.updateConfigValue(teamName+"-stage",stage.toString());
+            configurationKeyValuesService.updateConfigValue(teamName+"-hint","");
         }else{
             responseMessage.setMessage(failureMessage);
         }
-        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 }

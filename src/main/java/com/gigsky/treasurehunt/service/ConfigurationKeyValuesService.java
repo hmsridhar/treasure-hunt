@@ -69,7 +69,7 @@ public class ConfigurationKeyValuesService {
         String teamName = teamRepository.getTeamNameByTeamId(teamId);
         Integer stage = getIntegerConfigValue(teamName+"-stage");
         if(stage == 1){
-            configurationKeyValuesRepository.updateConfigValue(teamName+"-stage","3");
+            configurationKeyValuesRepository.updateConfigValue(teamName+"-stage","2");
             moveStatus = "accepted";
         }
         return moveStatus;
