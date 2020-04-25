@@ -61,6 +61,7 @@ public class LoginController {
         configurationKeyValuesService.saveConfigKeyValue(keyValue);
         keyValue = new ConfigurationKeyValues();
         keyValue.setKey(user.getUsername()+"-hint");
+        keyValue.setValue("");
         configurationKeyValuesService.saveConfigKeyValue(keyValue);
         keyValue.setValue("");
         for(int i=1;i<=4;i++){

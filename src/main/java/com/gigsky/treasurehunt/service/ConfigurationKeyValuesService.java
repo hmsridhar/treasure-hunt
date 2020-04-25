@@ -44,7 +44,9 @@ public class ConfigurationKeyValuesService {
         Integer stage = getIntegerConfigValue(teamName+"-stage");
         Integer currentDay = getIntegerConfigValue("day");
         String imagePath = getStringConfigValue(teamName+"-img"+day); //this is not needed, as user is moved to stage 5 only
+
         if(currentDay >= day && stage == 5 && !imagePath.equals("")){      //     after image verification
+            day++; //returns the key for the next day
             return getStringConfigValue("key"+day);
         }
         return "";

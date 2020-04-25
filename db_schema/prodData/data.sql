@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	5.7.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `configurationKeyValues` WRITE;
 /*!40000 ALTER TABLE `configurationKeyValues` DISABLE KEYS */;
-INSERT INTO `configurationKeyValues` VALUES ('Aaryavarta-day','1'),('Aaryavarta-stage','1'),('Akhandadweepa-day','1'),('Akhandadweepa-stage','1'),('COINS_REQUIRED_UNLOCK_CLUE','16'),('day','1'),('DevaBhumi-day','1'),('DevaBhumi-stage','1'),('Karusha-day','1'),('Karusha-stage','1'),('key1','23'),('key2','46'),('key3','90'),('Mahishaka-day','1'),('Mahishaka-stage','1'),('MAX_ATTEMPTS_PUZZLE','5'),('Nishada-day','1'),('Nishada-stage','1'),('PUZZLES_REQ_UNLOCK_CLUE','8'),('Shalwa-day','1'),('Shalwa-stage','1');
+INSERT INTO `configurationKeyValues` VALUES ('Aaryavarta-day','1'),('Aaryavarta-hint',''),('Aaryavarta-img1',''),('Aaryavarta-img2',''),('Aaryavarta-img3',''),('Aaryavarta-img4',''),('Aaryavarta-stage','1'),('Akhandadweepa-day','1'),('Akhandadweepa-hint',''),('Akhandadweepa-img1',''),('Akhandadweepa-img2',''),('Akhandadweepa-img3',''),('Akhandadweepa-img4',''),('Akhandadweepa-stage','1'),('COINS_REQUIRED_UNLOCK_CLUE','16'),('day','1'),('DevaBhumi-day','1'),('DevaBhumi-hint',''),('DevaBhumi-img1',''),('DevaBhumi-img2',''),('DevaBhumi-img3',''),('DevaBhumi-img4',''),('DevaBhumi-stage','1'),('Karusha-day','1'),('Karusha-hint',''),('Karusha-img1',''),('Karusha-img2',''),('Karusha-img3',''),('Karusha-img4',''),('Karusha-stage','1'),('key1','32'),('key2','46'),('key3','90'),('Mahishaka-day','1'),('Mahishaka-hint',''),('Mahishaka-img1',''),('Mahishaka-img2',''),('Mahishaka-img3',''),('Mahishaka-img4',''),('Mahishaka-stage','1'),('MAX_ATTEMPTS_PUZZLE','5'),('Nishadha-day','1'),('Nishadha-hint',''),('Nishadha-img1',''),('Nishadha-img2',''),('Nishadha-img3',''),('Nishadha-img4',''),('Nishadha-stage','1'),('passkey-1','32'),('passkey-2','46'),('passkey-3','90'),('passkey-4','239094306'),('Shalwa-day','1'),('Shalwa-hint',''),('Shalwa-img1',''),('Shalwa-img2',''),('Shalwa-img3',''),('Shalwa-img4',''),('Shalwa-stage','1');
 /*!40000 ALTER TABLE `configurationKeyValues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +67,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (1,'Admin Team',14,0),(2,'Akhandadweepa',0,0),(3,'Nishadha',0,0),(4,'Aaryavarta',0,0),(5,'Shalwa',0,0),(6,'Mahishaka',0,0),(7,'DevaBhumi',0,0),(8,'Karusha',0,0);
+INSERT INTO `team` VALUES (1,'Amaravathi',0,0),(2,'Akhandadweepa',0,0),(3,'Nishadha',0,0),(4,'Aaryavarta',0,0),(5,'Shalwa',0,0),(6,'Mahishaka',0,0),(7,'DevaBhumi',0,0),(8,'Karusha',0,0);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','$2a$10$YkEmZvBWnFRjuvf2QDq.QeKArgg8MCuL3gpXyRfZ1x0LuZTdV0Byi',1,'ADMIN','','2020-04-25 04:43:58.525'),(2,'Akhandadweepa','$2a$10$bCrkzd4or1D02LcbhGjrluVQj267qqnv5prnIWm8ynf0tWU6POoyu',2,'TEAM',NULL,NULL),(3,'Nishada','$2a$10$pBnLExit/7mtCzMD5HeJCupXheymL2y24YUdM8kY9H2YlMUnD6Ml.',3,'TEAM',NULL,NULL),(4,'Aaryavarta','$2a$10$hA7PtjxY68HL4sxETT955ufAaK/sVXXAe/dDRyZNI1rgtAfWLNFeK',4,'TEAM',NULL,NULL),(5,'Shalwa','$2a$10$XpZeBRvXk7EydYUaiX0e0OPejiPJ9gsP.xwG6bYbTM6qnH/0L3l6y',5,'TEAM',NULL,NULL),(6,'Mahishaka','$2a$10$NTaRk5rcRwgW.li2MMJA.OVqXUV11NhbqZ5Y5FPYtHhCpRv9EaLxO',6,'TEAM',NULL,NULL),(7,'DevaBhumi','$2a$10$pzkwQRfpCTwrFTV5F4GSfebs/pWYI14Dm08gs5N3e/rGGjc3pca4O',7,'TEAM',NULL,NULL),(8,'Karusha','$2a$10$tsAAhC.7TPPoxK62O5K/0.gdMfwVeT8X6iVsnHcb68fpXZWx/ALF2',8,'TEAM',NULL,NULL);
+INSERT INTO `user` VALUES (10,'admin','$2a$10$YkEmZvBWnFRjuvf2QDq.QeKArgg8MCuL3gpXyRfZ1x0LuZTdV0Byi',1,'ADMIN',NULL,NULL),(12,'Akhandadweepa','$2a$10$EETLPFfcQXK3/kAOJwzuGuQlCWkBXozGxGVOCGdTtarXYgQZ7FqyK',2,'TEAM',NULL,NULL),(13,'Nishadha','$2a$10$eiOQKl7kox4sx8wTr8.4leXSUKLe4TnK5v6rQiNcNhcZpvIq/WnQa',3,'TEAM',NULL,NULL),(14,'Aaryavarta','$2a$10$UYMTHR1RFwR3yKz0aoLlGuQiK01ScevV5mTz11H9Rc5A/G7ZufwtS',4,'TEAM',NULL,NULL),(15,'Shalwa','$2a$10$NgH8k.fZ1wJvySI02eKfKeYocTMJvQBK/4pFFy3WxDYR.C9POX.jy',5,'TEAM',NULL,NULL),(16,'Mahishaka','$2a$10$elcW.o1vwNnA456NICxvWuA0EJxX2yqTXn4lN7xDdElkDjUleh2bq',6,'TEAM',NULL,NULL),(17,'DevaBhumi','$2a$10$Omj4VWglxB8/kTeZoO2/kuKaW2VP4Zql5JpUnfoKDo91x0yWBTZZa',7,'TEAM',NULL,NULL),(18,'Karusha','$2a$10$X97kerru9tPclJao9lrDqu5/kFmQqpqe12EcjodBY1.85RArz1MhC',8,'TEAM',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -100,4 +100,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25  3:08:07
+-- Dump completed on 2020-04-25 18:51:17
