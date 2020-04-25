@@ -2,12 +2,14 @@ package com.gigsky.treasurehunt.service;
 
 import com.gigsky.treasurehunt.dao.HasAnsweredQuestionRepository;
 import com.gigsky.treasurehunt.dao.QuestionRepository;
+import com.gigsky.treasurehunt.dao.TeamRepository;
 import com.gigsky.treasurehunt.model.beans.Answer;
 import com.gigsky.treasurehunt.model.beans.Clue;
 import com.gigsky.treasurehunt.model.beans.QuestionInfo;
 import com.gigsky.treasurehunt.model.beans.TeamQuestionAnswers;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredQuestion;
 import com.gigsky.treasurehunt.model.dbbeans.Question;
+import com.gigsky.treasurehunt.model.dbbeans.Team;
 import com.gigsky.treasurehunt.model.dbbeans.TeamQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,10 @@ public class QuestionService {
 
     @Autowired
     QuestionRepository questionRepository;
+    @Autowired
+    TeamRepository teamRepository;
+    @Autowired
+    ConfigurationKeyValuesService configurationKeyValuesService;
 
     public List<HasAnsweredQuestion> getAnsweredListForTeam(Long teamId){
 
@@ -32,10 +38,17 @@ public class QuestionService {
         return answeredQuestionsByTeam;
     }
 
-    public QuestionInfo getQuestionInfo(Long teamId){
-        Long questionId=1l;
-        Question question=questionRepository.getQuestionById(questionId);
-        boolean hasAnsweredQuestion=hasAnsweredQuestion(teamId,questionId);
+    public QuestionInfo getQuestionInfo(Long teamId)throws Exception{
+        Integer currentDay = configurationKeyValuesService.getIntegerConfigValue("day");
+        String teamName = teamRepository.getTeamNameByTeamId(teamId);
+        Integer teamDay = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
+        if(teamDay > currentDay){
+            throw new Exception();
+        }
+//        Long questionId=1l;
+//        Question question=questionRepository.getQuestionById(questionId);
+        Question question = questionRepository.getQuestionByDay(teamDay);
+        boolean hasAnsweredQuestion=hasAnsweredQuestion(teamId,question.getId());
         QuestionInfo questionInfo=new QuestionInfo();
         questionInfo.setId(question.getId());
         questionInfo.setText(question.getQuestion());
@@ -158,6 +171,10 @@ public class QuestionService {
         HasAnsweredQuestion hasAnsweredQuestion=
                 hasAnsweredQuestionRepository.findHasAnsweredQuestionsByTeamQuestion(teamQuestion);
         return hasAnsweredQuestion;
+    }
+
+    public Question getQuestionForDay(Integer day){
+        return questionRepository.getQuestionByDay(day);
     }
 
 

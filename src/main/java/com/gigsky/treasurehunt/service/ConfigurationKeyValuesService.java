@@ -64,4 +64,27 @@ public class ConfigurationKeyValuesService {
         return moveStatus;
     }
 
+    public String reachCity(Long teamId){
+        String moveStatus = "rejected";
+        String teamName = teamRepository.getTeamNameByTeamId(teamId);
+        Integer stage = getIntegerConfigValue(teamName+"-stage");
+        if(stage == 1){
+            configurationKeyValuesRepository.updateConfigValue(teamName+"-stage","3");
+            moveStatus = "accepted";
+        }
+        return moveStatus;
+
+    }
+
+    public Boolean isMoveValid(Long teamId, Integer teamStage){
+        Boolean isMoveValid = false;
+        String teamName = teamRepository.getTeamNameByTeamId(teamId);
+        Integer stage = getIntegerConfigValue(teamName+"-stage");
+        if( stage == teamStage){
+//            configurationKeyValuesRepository.updateConfigValue(teamName+"-stage",new Integer(stage+1).toString());
+            isMoveValid = true;
+        }
+        return isMoveValid;
+    }
+
 }

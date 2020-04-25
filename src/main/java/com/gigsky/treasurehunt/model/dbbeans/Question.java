@@ -18,6 +18,9 @@ public class Question {
     @Column(name = "clue")
     private String clue;
 
+    @Column
+    private Integer day;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +53,13 @@ public class Question {
 
     public void setClue(String clue) {
         this.clue = clue;
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
     }
 }

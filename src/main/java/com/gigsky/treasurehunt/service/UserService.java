@@ -50,6 +50,8 @@ public class UserService {
         userDetails.setTeamDay(configurationKeyValuesService.getIntegerConfigValue(team.getName()+"-day"));
         userDetails.setTeamStage(configurationKeyValuesService.getIntegerConfigValue(team.getName()+"-stage"));
         userDetails.setTeamImageUploadStatus(configurationKeyValuesService.getStringConfigValue(team.getName()+"-img"+userDetails.getTeamDay()).equals("")?"pending":"done");
+        userDetails.setHint(configurationKeyValuesService.getStringConfigValue(team.getName()+"-hint"));
+        userDetails.setToken(userRepository.getTokenByUsername(username));
         return userDetails;
     }
 

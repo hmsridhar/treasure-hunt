@@ -52,20 +52,49 @@ public class QuestionController {
                 responseMessage.setMessage("INVALID DATA ACCESS!");
                 return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
             }
-            QuestionInfo questionInfo = questionService.getQuestionInfo(teamId);
-            return new ResponseEntity<>(questionInfo,HttpStatus.OK);
+            if(!configurationKeyValuesService.isMoveValid(teamId,3)){
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setMessage("Move Rejected");
+                return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+            }try {
+                QuestionInfo questionInfo = questionService.getQuestionInfo(teamId);
+                return new ResponseEntity<>(questionInfo, HttpStatus.OK);
+            }catch (Exception e){
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setMessage("Move Rejected");
+                return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+            }
         }catch (Exception e ){
 
         }
         return null;
     }
 
-    @GetMapping("/{teamId}/{questionId}/clue")
-    public ResponseEntity<?> getClueForQuestion(@PathVariable("questionId")Long questionId,@PathVariable("teamId")Long teamId,Principal principal){
+    @GetMapping("/{teamId}/clue")
+    public ResponseEntity<?> getClueForQuestion(@PathVariable("teamId")Long teamId,Principal principal){
         if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setMessage("INVALID DATA ACCESS!");
             return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
+        if(!configurationKeyValuesService.isMoveValid(teamId,3)){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+        Integer currentDay = configurationKeyValuesService.getIntegerConfigValue("day");
+        String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+        Integer teamDay = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
+        if(teamDay > currentDay){
+            ResponseMessage responseMessage = new ResponseMessage();
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+        String hint = configurationKeyValuesService.getStringConfigValue(teamName+"-hint");
+        if(!"".equals(hint)){
+            Clue clue = new Clue();
+            clue.setClue(hint);
+            return new  ResponseEntity<>(clue,HttpStatus.OK);
         }
 
         //check if 10 puzzles answered or score>=20
@@ -82,9 +111,11 @@ public class QuestionController {
             return new  ResponseEntity<>(responseMessage,HttpStatus.OK);
         }
         //score is greater than 20, so can redeem clue
+        Long questionId = questionService.getQuestionForDay(teamDay).getId();
         Clue clue=questionService.getClue(questionId);
         //update db, reduce score by 20.
         teamService.updatePointsReduceByCluePoints(teamId,coinsReq);
+        configurationKeyValuesService.updateConfigValue(teamName+"-hint",clue.getClue());
         return new  ResponseEntity<>(clue,HttpStatus.OK);
 
     }

@@ -1,7 +1,9 @@
 package com.gigsky.treasurehunt.dao;
 
 import com.gigsky.treasurehunt.model.dbbeans.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,4 +17,7 @@ public interface UserRepository extends CrudRepository<User,Long> {
     User findByUsername(String username);
 
     Boolean existsByUsernameAndTeamId(String username, Long teamId);
+
+    @Query("select token from User where username = :username")
+    String getTokenByUsername(@Param("username") String username);
 }

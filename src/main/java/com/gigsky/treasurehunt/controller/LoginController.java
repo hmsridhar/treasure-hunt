@@ -59,6 +59,10 @@ public class LoginController {
         keyValue.setKey(user.getUsername()+"-day");
         keyValue.setValue("1");
         configurationKeyValuesService.saveConfigKeyValue(keyValue);
+        keyValue = new ConfigurationKeyValues();
+        keyValue.setKey(user.getUsername()+"-hint");
+        configurationKeyValuesService.saveConfigKeyValue(keyValue);
+        keyValue.setValue("");
         for(int i=1;i<=4;i++){
             keyValue = new ConfigurationKeyValues();
             keyValue.setKey(user.getUsername()+"-img"+i);

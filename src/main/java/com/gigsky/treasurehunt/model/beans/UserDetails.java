@@ -19,7 +19,13 @@ public class UserDetails {
     private String teamName;
 
     @JsonProperty
+    private String token;
+
+    @JsonProperty
     private Long teamId;
+
+    @JsonProperty
+    private String hint;
 
     @JsonProperty
     private Long lastUpdatedScore;
@@ -52,6 +58,14 @@ public class UserDetails {
         this.username = username;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getTeamName() {
         return teamName;
     }
@@ -66,6 +80,14 @@ public class UserDetails {
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
     }
 
     public Long getLastUpdatedScore() {

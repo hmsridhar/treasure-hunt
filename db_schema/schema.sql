@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.25
+-- Server version	5.7.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -98,6 +98,7 @@ CREATE TABLE `question` (
   `text` varchar(255) NOT NULL,
   `answer` varchar(200) NOT NULL,
   `clue` varchar(60) NOT NULL,
+  `day` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -163,4 +164,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25  3:06:10
+-- Dump completed on 2020-04-25 14:36:14

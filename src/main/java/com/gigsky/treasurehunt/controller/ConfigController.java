@@ -65,4 +65,21 @@ public class ConfigController {
             return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(value = "/team/{teamId}/reachCity")
+    public ResponseEntity<?> reachCity(@PathVariable Long teamId, Principal principal){
+        ResponseMessage responseMessage = new ResponseMessage();
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
+        String moveStatus = configurationKeyValuesService.reachCity(teamId);
+        if(moveStatus.equals("accepted")){
+            responseMessage.setMessage("Move Accepted");
+            return new ResponseEntity<>(responseMessage,HttpStatus.OK);
+        }else{
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+    }
 }
