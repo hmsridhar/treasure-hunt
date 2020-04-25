@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.29-log
+-- Server version	5.7.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -81,9 +81,9 @@ CREATE TABLE `puzzle` (
   `question` varchar(250) DEFAULT NULL,
   `filename` varchar(100) DEFAULT NULL,
   `points` bigint(20) NOT NULL,
-  `answer` varchar(45) DEFAULT NULL,
+  `answer` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `team_id` (`team_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -164,4 +164,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25 14:36:14
+-- Dump completed on 2020-04-25 20:26:24

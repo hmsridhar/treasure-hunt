@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.25, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: treasurehunt
 -- ------------------------------------------------------
--- Server version	5.7.29-log
+-- Server version	5.7.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -49,6 +49,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `puzzle` WRITE;
 /*!40000 ALTER TABLE `puzzle` DISABLE KEYS */;
+INSERT INTO `puzzle` VALUES (1,'TEXT',NULL,'icecreamText_1.png',2,NULL),(2,'IMAGE',NULL,'toysImg_2.png',2,'game of thrones,got'),(3,'TEXT',NULL,'fiftysixText_3.png',2,NULL),(4,'TEXT',NULL,'numbersText_4.png',2,'280'),(5,'IMAGE',NULL,'boxesImg_5.png',2,'9'),(6,'TEXT',NULL,'deviceText_6.png',2,'ipod,i-pod'),(7,'IMAGE',NULL,'companyImg_7.png',2,'delhivery'),(8,'IMAGE',NULL,'playerImg_8.png',2,'royal challengers bangalore,rcb,royal challengers bengaluru'),(9,'TEXT',NULL,'famousSongText_9.png',2,'why this kolaveri di,kolaveri,why this kolaveri kolaveri di?,why this kolaveri kolaveri di,why this kolaveri di?'),(10,'IMAGE',NULL,'timeImg_10.png',2,'1989'),(11,'TEXT',NULL,'sequencetText_11.png',2,'21'),(12,'IMAGE',NULL,'mensaImg_12.png',2,'6'),(13,'TEXT','ITSY YWZXY GWZYZX','caesarText_13.png',2,'dont trust brutus'),(14,'TEXT',NULL,'spartaText_14.png',2,'300'),(15,'TEXT',NULL,'trophyausText_15.png',2,'women\'s  big bash league,wbbl,,women big bash league,women\'s big bash,women big bash'),(16,'TEXT',NULL,'scofieldImg_16.png',2,'purdue hill alabama'),(17,'IMAGE',NULL,'engineImg_17.png',2,'javascript engines,,js engines,ecmascript engines'),(18,'IMAGE','What does the gif say?\n','gif_18.gif',2,NULL),(19,'TEXT',NULL,'googlecollideText_19.png',2,'Why are the galaxies in a spiral shape?, why are galaxies in spiral shape?,Why are the galaxies in a spiral shape?, why are galaxies in a spiral shape?,'),(20,'TEXT',NULL,'dayQText_20.png',2,'wednesday'),(21,'TEXT',NULL,'illuminate45Text_21.png',2,NULL),(22,'TEXT',NULL,'spiritualText_22.png',2,NULL),(23,'TEXT',NULL,NULL,2,NULL),(24,'TEXT',NULL,NULL,2,NULL),(25,'TEXT',NULL,NULL,2,NULL);
 /*!40000 ALTER TABLE `puzzle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,4 +101,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25 18:51:17
+-- Dump completed on 2020-04-25 20:26:44
