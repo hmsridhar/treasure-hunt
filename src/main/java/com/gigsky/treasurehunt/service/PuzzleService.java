@@ -53,16 +53,17 @@ public class PuzzleService {
             teamPuzzle.setTeamId(teamId);
             teamPuzzle.setPuzzleId(puzzleId);
             HasAnsweredPuzzle puzzleInfoTeam=hasAnsweredPuzzleRepository.findByTeamPuzzle(teamPuzzle);
-            if(puzzleInfoTeam.isHasAnswered()){
-                responseMessage.setMessage("Puzzle already answered");
-                return responseMessage;
-            }
+
             //if its first attempt, then value will be null.so need to add initially.
             if(puzzleInfoTeam==null){
                 puzzleInfoTeam=addFirstAttempt(teamPuzzle);
             }
             if(puzzleInfoTeam==null){
                 return null;
+            }
+            if(puzzleInfoTeam.isHasAnswered()){
+                responseMessage.setMessage("Puzzle already answered");
+                return responseMessage;
             }
             Long attempts=puzzleInfoTeam.getAttempts();
             //check if max attempts reached
