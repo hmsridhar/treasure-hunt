@@ -136,7 +136,8 @@ public class TeamController {
             return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
         }
         ResponseMessage responseMessage = new ResponseMessage();
-        Integer day = configurationKeyValuesService.getIntegerConfigValue("day");
+        String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+        Integer day = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
         String imagepath = configurationKeyValuesService.getStringConfigValue(principal.getName()+"-img"+day);
         if(!imagepath.equals("")){
             responseMessage.setMessage("Image already uploaded");

@@ -85,9 +85,10 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         String day = configurationKeyValuesService.getStringConfigValue("day");
         response.addHeader("currentDay",day);
         if(!user.getUsername().equals("admin")) {
-            response.addHeader("teamDay", configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-day"));
+            String teamDay = configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-day");
+            response.addHeader("teamDay", teamDay);
             response.addHeader("teamStage", configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-stage"));
-            response.addHeader("teamImageUploadStatus", configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-img" + day).equals("") ? "pending" : "done");
+            response.addHeader("teamImageUploadStatus", configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-img" + teamDay).equals("") ? "pending" : "done");
             response.addHeader("hint", configurationKeyValuesService.getStringConfigValue(user.getUsername() + "-hint"));
         }
         if(tokenExpiryTime != null){

@@ -3,6 +3,7 @@ package com.gigsky.treasurehunt.controller;
 import com.gigsky.treasurehunt.model.beans.Passkey;
 import com.gigsky.treasurehunt.model.dbbeans.ResponseMessage;
 import com.gigsky.treasurehunt.service.ConfigurationKeyValuesService;
+import com.gigsky.treasurehunt.service.TeamService;
 import com.gigsky.treasurehunt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class ConfigController {
     ConfigurationKeyValuesService configurationKeyValuesService;
     @Autowired
     UserService userService;
+    @Autowired
+    TeamService teamService;
 
     @GetMapping("/day")
     public ResponseEntity<?> getDayConfigValue()throws Exception{
@@ -81,5 +84,32 @@ public class ConfigController {
             responseMessage.setMessage("Move Rejected");
             return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @GetMapping("/team/{teamId}/enterNextCity")
+    public ResponseEntity<?> enterNextCity(@PathVariable Long teamId, Principal principal){
+        ResponseMessage responseMessage = new ResponseMessage();
+        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+            responseMessage.setMessage("INVALID DATA ACCESS!");
+            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+        }
+        if(!configurationKeyValuesService.isMoveValid(teamId,5)){
+            responseMessage.setMessage("Move Rejected");
+            return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
+        }
+        String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+        Integer teamDay = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
+        Integer currentDay = configurationKeyValuesService.getIntegerConfigValue("day");
+        if(teamDay<currentDay){
+            teamDay++;
+            configurationKeyValuesService.updateConfigValue(teamName+"-day",teamDay.toString());
+            configurationKeyValuesService.updateConfigValue(teamName+"-stage","1");
+            responseMessage.setMessage("Move Accepted");
+            return new ResponseEntity<>(responseMessage,HttpStatus.OK);
+        }
+
+        responseMessage.setMessage("Move Rejected");
+        return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
     }
 }

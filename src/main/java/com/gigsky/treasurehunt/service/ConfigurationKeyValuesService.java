@@ -47,6 +47,12 @@ public class ConfigurationKeyValuesService {
 
         if(currentDay >= day && stage == 5 && !imagePath.equals("")){      //     after image verification
             day++; //returns the key for the next day
+            if(day == 4){
+                return "You have the key with you already, wait till you enter the next city to know how";
+            }
+            else if(day == 5){
+                return "Game completed";
+            }
             return getStringConfigValue("key"+day);
         }
         return "";
