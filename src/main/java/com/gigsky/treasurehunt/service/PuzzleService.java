@@ -34,6 +34,9 @@ public class PuzzleService {
     @Autowired
     ConfigurationKeyValuesService configurationKeyValuesService;
 
+    @Autowired
+    TeamService teamService;
+
 
 
 
@@ -86,6 +89,7 @@ public class PuzzleService {
                 hasAnsweredPuzzle.setAttempts(attempts);
                 hasAnsweredPuzzleRepository.save(hasAnsweredPuzzle);
                 responseMessage.setMessage("Answer submitted successfully");
+                teamService.updateTeamScore(teamId);
                 return responseMessage;
             }
             else{

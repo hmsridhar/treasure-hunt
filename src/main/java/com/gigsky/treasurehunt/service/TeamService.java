@@ -80,6 +80,13 @@ public class TeamService {
 
     }
 
+    public void updateTeamScore(Long teamId){
+        Team team=teamRepository.findTeamById(teamId);
+        team.setScore(team.getScore()+2);
+        teamRepository.save(team);
+
+    }
+
 
 
 
