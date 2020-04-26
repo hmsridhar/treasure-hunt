@@ -5,5 +5,6 @@ package com.gigsky.treasurehunt.model.beans;
  */
 public enum PuzzleType {
     TEXT,
-    IMAGE
+    IMAGE,
+    VOICE
 }
