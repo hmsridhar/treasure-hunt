@@ -15,6 +15,9 @@ public class QuestionInfo {
     private String text;
 
     @JsonProperty
+    private String filename;
+
+    @JsonProperty
     private boolean hasAnswered;
 
     @JsonProperty
@@ -41,6 +44,14 @@ public class QuestionInfo {
 
     public boolean isHasAnswered() {
         return hasAnswered;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public void setHasAnswered(boolean hasAnswered) {

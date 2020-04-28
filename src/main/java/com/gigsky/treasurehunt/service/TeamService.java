@@ -88,6 +88,9 @@ public class TeamService {
     }
 
 
+    public Long getTeamScoreByTeamName(String teamName){
+        return  teamRepository.getTeamScoreByTeamName(teamName);
+    }
 
 
 

@@ -9,7 +9,6 @@ import com.gigsky.treasurehunt.model.beans.QuestionInfo;
 import com.gigsky.treasurehunt.model.beans.TeamQuestionAnswers;
 import com.gigsky.treasurehunt.model.dbbeans.HasAnsweredQuestion;
 import com.gigsky.treasurehunt.model.dbbeans.Question;
-import com.gigsky.treasurehunt.model.dbbeans.Team;
 import com.gigsky.treasurehunt.model.dbbeans.TeamQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +51,7 @@ public class QuestionService {
         QuestionInfo questionInfo=new QuestionInfo();
         questionInfo.setId(question.getId());
         questionInfo.setText(question.getQuestion());
+        questionInfo.setFilename(question.getFilename());
         questionInfo.setHasAnswered(hasAnsweredQuestion);
         return questionInfo;
     }

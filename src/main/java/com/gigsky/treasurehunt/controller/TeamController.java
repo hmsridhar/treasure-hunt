@@ -8,6 +8,9 @@ import com.gigsky.treasurehunt.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -166,6 +169,47 @@ public class TeamController {
             return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/image/download")
+    public ResponseEntity<?> getTeamImage(@RequestParam Long teamId,@RequestParam Long day, @RequestParam String passkey)throws Exception{
+        if(!passkey.equals("Hitherto shalt thou come, but no further")){
+            return new ResponseEntity<>("INVALID DATA ACCESS! ",HttpStatus.FORBIDDEN);
+        }
+        String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+//        Integer day = configurationKeyValuesService.getIntegerConfigValue(teamName+"-day");
+        String path = configurationKeyValuesService.getStringConfigValue(teamName+"-img"+day);
+        if("".equals(path) || path == null){
+            return new ResponseEntity<>("No Image has been uploaded ",HttpStatus.OK);
+        }
+        Path filePath = Paths.get(path);
+        Resource resource = new UrlResource(filePath.toUri());
+        if(!resource.exists()){
+            return new ResponseEntity<>("File not found",HttpStatus.OK);
+        }
+        String contentType = "application/octet-stream";
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+
+    }
+
+    @PostMapping("/image/approve")
+    public ResponseEntity<?> approveTeamImageUpload(@RequestParam Long teamId, Principal principal){
+        ResponseMessage responseMessage = new ResponseMessage();
+//        if(!userService.existsByUsernameAndTeamId(principal.getName(),teamId)){
+//            responseMessage.setMessage("INVALID DATA ACCESS!");
+//            return new ResponseEntity<>(responseMessage,HttpStatus.FORBIDDEN);
+//        }
+        if(configurationKeyValuesService.isMoveValid(teamId,4)){
+            String teamName = teamService.getTeamNameFromTeamId(teamId).getName();
+            configurationKeyValuesService.updateConfigValue(teamName+"-stage","5");
+            responseMessage.setMessage("Team Image Successfully verified");
+            return new ResponseEntity<>(responseMessage,HttpStatus.OK);
+        }
+        responseMessage.setMessage("Team Image verification failed");
+        return new ResponseEntity<>(responseMessage,HttpStatus.BAD_REQUEST);
     }
 
 

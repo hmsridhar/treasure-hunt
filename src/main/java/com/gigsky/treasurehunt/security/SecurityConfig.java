@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
                 .antMatchers(HttpMethod.POST,"/register/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/team/image/download").permitAll()
+                .antMatchers(HttpMethod.POST,"/team/image/approve").hasRole("ADMIN")
                 .anyRequest().authenticated();
 //                .and().httpBasic()
 //                .and()

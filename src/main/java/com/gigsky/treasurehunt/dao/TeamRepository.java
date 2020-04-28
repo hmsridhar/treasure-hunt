@@ -20,4 +20,7 @@ public interface TeamRepository extends CrudRepository<Team,Long> {
 
     @Query("select name from Team where id = :teamId")
     String getTeamNameByTeamId(@Param("teamId") Long teamId);
+
+    @Query("select score from Team where name = :name")
+    Long getTeamScoreByTeamName(@Param("name") String name);
 }

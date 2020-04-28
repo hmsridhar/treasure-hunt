@@ -9,8 +9,11 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "text")
+    @Column(name = "text", columnDefinition = "text")
     private String question;
+
+    @Column
+    private String filename;
 
     @Column(name = "answer")
     private String answer;
@@ -37,6 +40,14 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getAnswer() {
